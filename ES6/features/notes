@@ -1,0 +1,4 @@
+inquieetante questa chiamata a funzione
+quux `foo\n${ 42 }bar`
+ti fa il nan facile quando usi var senza averle inizializzate
+inoltre ha problemi a gestire i big numbers

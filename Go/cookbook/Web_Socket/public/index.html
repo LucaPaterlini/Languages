@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket</title>
+</head>
+<body>
+    <p id="output"></p>
+    <script>
+        let loc = window.location;
+        let uri = 'ws:';
+        if (loc.protocol === "https:"){
+            uri = "wss:";
+        }
+        uri += '//' + loc.host;
+        uri += loc.pathname + 'ws'
+
+        ws = new WebSocket(uri)
+        ws.onopen = function () {console.log('Connected')}
+        ws.onmessage = function (evt) {
+            let out = document.getElementById('output')
+            out.innerHTML += evt.data + '<br>'
+        }
+        let e=0;
+        setInterval(function () {
+            e+=1;
+            ws.send("Hello, Server!"+e.toString());}, 0);
+    </script>
+</body>
+</html>

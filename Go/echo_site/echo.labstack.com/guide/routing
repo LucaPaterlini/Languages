@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="Routing HTTP request in Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@echo">
+  <meta name="twitter:creator" content="@labstack">
+  <meta name="twitter:title" content="Routing | Echo - High performance, minimalist Go web framework">
+  <meta name="twitter:description" content="Routing HTTP request in Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta name="twitter:image" content="https://echo.labstack.com/images/share.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Routing">
+  <meta property="og:title" content="Routing | Echo - High performance, minimalist Go web framework">
+  <meta property="og:description" content="Routing HTTP request in Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta property="og:url" content="https://echo.labstack.com">
+  <meta property="og:image" content="https://echo.labstack.com/images/share.png">
+  <title>
+    Routing | Echo - High performance, minimalist Go web framework
+  </title>
+  <link rel="stylesheet"  
+    href="https://unpkg.com/font-awesome@4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet"
+    href="https://cdn.labstack.com/css/icomoon.css">
+  <link rel="stylesheet" 
+    href="https://unpkg.com/docsearch.js@2.2.1/dist/cdn/docsearch.min.css">
+  <link rel="stylesheet" href="../css/bsa.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/w3.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/prism.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/base.css">
+  <link rel="icon"
+    type="image/png"
+    href="https://cdn.labstack.com/images/labstack-icon.png">
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-85059636-2', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+
+<body class="docs">
+	<div class="topnav">
+  <nav class="w3-content">
+    <a href="../index.html"><img class="logo" src="https://cdn.labstack.com/images/echo-logo.svg" alt="Echo"></a>
+    <span class="hide-small">
+      <i class="fa fa-search w3-text-gray"></i>
+      <input id="search-box" type="text" class="w3-input">
+    </span>
+    <span class="menu hide-small hide-medium">
+      
+      
+        <a class="active" href="../guide">Guide</a>
+      
+        <a href="../middleware">Middleware</a>
+      
+        <a href="../cookbook">Cookbook</a>
+      
+      <a href="https://forum.labstack.com">Forum</a>
+    </span>
+    <button class="hamburger hide-large" onclick="toggleSidenav()">
+      <span></span>
+    </button>
+  </nav>
+</div>
+
+  <div class="w3-content">
+    <nav class="sidenav">
+  <div class="w3-container">
+    <button class="w3-button w3-theme w3-round-large" onclick="location.href='/support-echo';">
+      <i class="fa fa-heart" aria-hidden="true"></i> Support Echo
+    </button>
+    
+    <div class="menu">
+      
+        <a class="active" href="../guide">
+          Guide
+        </a>
+      
+        <a href="../middleware">
+          Middleware
+        </a>
+      
+        <a href="../cookbook">
+          Cookbook
+        </a>
+      
+    </div>
+    <div class="sub-menu">
+      
+        
+          <h3><i class='fa fa-book'></i> Guide</h3>
+          
+            <a href="installation">
+              Installation
+            </a>
+          
+            <a href="customization/index.html">
+              Customization
+            </a>
+          
+            <a href="context">
+              Context
+            </a>
+          
+            <a href="cookies">
+              Cookies
+            </a>
+          
+            <a href="error-handling">
+              Error Handling
+            </a>
+          
+            <a href="faq">
+              FAQ
+            </a>
+          
+            <a href="migration">
+              Migration
+            </a>
+          
+            <a href="request/index.html">
+              Request
+            </a>
+          
+            <a href="response">
+              Response
+            </a>
+          
+            <a class="active" href="routing">
+              Routing
+            </a>
+          
+            <a href="static-files">
+              Static Files
+            </a>
+          
+            <a href="templates">
+              Templates
+            </a>
+          
+            <a href="testing">
+              Testing
+            </a>
+          
+        
+      
+    </div>
+  </div>
+</nav>
+
+    <div class="main">
+      
+
+      <div class="ad">
+  <script async type="text/javascript" src="https://cdn.carbonads.com/carbon.js?zoneid=1673&amp;serve=C6AILKT&amp;placement=echolabstackcom" id="_carbonads_js"></script>
+</div>
+
+
+      <div class="w3-row-padding">
+        <div class="w3-col s12 m10 l10">
+          <div class="w3-panel w3-pale-green w3-leftbar w3-border-green">
+  <p>
+    Check out <a href="../middleware/cube">cube middleware</a> for HTTP analytics. Measure server latency, data transfer, discover top endpoints, server errors and much more.
+  </p>
+</div>
+
+          <article class="content">
+            <section>
+              <h1>Routing</h1>
+              
+
+<p>Echo&rsquo;s router is based on <a href="http://en.wikipedia.org/wiki/Radix_tree">radix tree</a>, making
+route lookup really fast. It leverages <a href="https://golang.org/pkg/sync/#Pool">sync pool</a>
+to reuse memory and achieve zero dynamic memory allocation with no GC overhead.</p>
+
+<p>Routes can be registered by specifying HTTP method, path and a matching handler.
+For example, code below registers a route for method <code>GET</code>, path <code>/hello</code> and a
+handler which sends <code>Hello, World!</code> HTTP response.</p>
+
+<pre><code class="language-go">// Handler
+func hello(c echo.Context) error {
+  	return c.String(http.StatusOK, &quot;Hello, World!&quot;)
+}
+
+// Route
+e.GET(&quot;/hello&quot;, hello)
+</code></pre>
+
+<p>You can use <code>Echo.Any(path string, h Handler)</code> to register a handler for all HTTP methods.
+If you want to register it for some methods use <code>Echo.Match(methods []string, path string, h Handler)</code>.</p>
+
+<p>Echo defines handler function as <code>func(echo.Context) error</code> where <code>echo.Context</code> primarily
+holds HTTP request and response interfaces.</p>
+
+<h2 id="match-any">Match-any</h2>
+
+<p>Matches zero or more characters in the path. For example, pattern <code>/users/*</code> will
+match:</p>
+
+<ul>
+<li><code>/users/</code></li>
+<li><code>/users/1</code></li>
+<li><code>/users/1/files/1</code></li>
+<li><code>/users/anything...</code></li>
+</ul>
+
+<h2 id="path-matching-order">Path Matching Order</h2>
+
+<ul>
+<li>Static</li>
+<li>Param</li>
+<li>Match any</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code class="language-go">e.GET(&quot;/users/:id&quot;, func(c echo.Context) error {
+	return c.String(http.StatusOK, &quot;/users/:id&quot;)
+})
+
+e.GET(&quot;/users/new&quot;, func(c echo.Context) error {
+	return c.String(http.StatusOK, &quot;/users/new&quot;)
+})
+
+e.GET(&quot;/users/1/files/*&quot;, func(c echo.Context) error {
+	return c.String(http.StatusOK, &quot;/users/1/files/*&quot;)
+})
+</code></pre>
+
+<p>Above routes would resolve in the following order:</p>
+
+<ul>
+<li><code>/users/new</code></li>
+<li><code>/users/:id</code></li>
+<li><code>/users/1/files/*</code></li>
+</ul>
+
+<blockquote>
+<p>Routes can be written in any order.</p>
+</blockquote>
+
+<h2 id="group">Group</h2>
+
+<p><code>Echo#Group(prefix string, m ...Middleware) *Group</code></p>
+
+<p>Routes with common prefix can be grouped to define a new sub-router with optional
+middleware. In addition to specified middleware group also inherits parent middleware.
+To add middleware later in the group you can use <code>Group.Use(m ...Middleware)</code>.
+Groups can also be nested.</p>
+
+<p>In the code below, we create an admin group which requires basic HTTP authentication
+for routes <code>/admin/*</code>.</p>
+
+<pre><code class="language-go">g := e.Group(&quot;/admin&quot;)
+g.Use(middleware.BasicAuth(func(username, password string) bool {
+	if username == &quot;joe&quot; &amp;&amp; password == &quot;secret&quot; {
+		return true
+	}
+	return false
+}))
+</code></pre>
+
+<h2 id="route-naming">Route Naming</h2>
+
+<p>Each of the registration methods returns a <code>Route</code> object, which can be used to name a route after the registration. For example:</p>
+
+<pre><code class="language-go">routeInfo := e.GET(&quot;/users/:id&quot;, func(c echo.Context) error {
+	return c.String(http.StatusOK, &quot;/users/:id&quot;)
+})
+routeInfo.Name = &quot;user&quot;
+
+// or using the inline syntax
+e.GET(&quot;/users/new&quot;, func(c echo.Context) error {
+	return c.String(http.StatusOK, &quot;/users/new&quot;)
+}).Name = &quot;newuser&quot;
+</code></pre>
+
+<p>Route names can be very useful when generating URIs from the templates, where you can&rsquo;t access the handler references or when you have multiple routes with the same handler.</p>
+
+<h2 id="uri-building">URI Building</h2>
+
+<p><code>Echo#URI(handler HandlerFunc, params ...interface{})</code> can be used to generate URI for any handler with specified path parameters. It&rsquo;s helpful to centralize all your
+URI patterns which ease in refactoring your application.</p>
+
+<p>For example, <code>e.URI(h, 1)</code> will generate <code>/users/1</code> for the route registered below:</p>
+
+<pre><code class="language-go">// Handler
+h := func(c echo.Context) error {
+	return c.String(http.StatusOK, &quot;OK&quot;)
+}
+
+// Route
+e.GET(&quot;/users/:id&quot;, h)
+</code></pre>
+
+<p>In addition to <code>Echo#URI</code>, there is also <code>Echo#Reverse(name string, params ...interface{})</code> which is used to generate URIs based on the route name. For example a call to <code>Echo#Reverse(&quot;foobar&quot;, 1234)</code> would generate the URI <code>/users/1234</code> if the <code>foobar</code> route is registered like below:</p>
+
+<pre><code class="language-go">// Handler
+h := func(c echo.Context) error {
+	return c.String(http.StatusOK, &quot;OK&quot;)
+}
+
+// Route
+e.GET(&quot;/users/:id&quot;, h).Name = &quot;foobar&quot;
+</code></pre>
+
+<h2 id="list-routes">List Routes</h2>
+
+<p><code>Echo#Routes() []*Route</code> can be used to list all registered routes in the order
+they are defined. Each route contains HTTP method, path and an associated handler.</p>
+
+<p><em>Example</em></p>
+
+<pre><code class="language-go">// Handlers
+func createUser(c echo.Context) error {
+}
+
+func findUser(c echo.Context) error {
+}
+
+func updateUser(c echo.Context) error {
+}
+
+func deleteUser(c echo.Context) error {
+}
+
+// Routes
+e.POST(&quot;/users&quot;, createUser)
+e.GET(&quot;/users&quot;, findUser)
+e.PUT(&quot;/users&quot;, updateUser)
+e.DELETE(&quot;/users&quot;, deleteUser)
+</code></pre>
+
+<p>Using the following code you can output all the routes to a JSON file:</p>
+
+<pre><code class="language-go">data, err := json.MarshalIndent(e.Routes(), &quot;&quot;, &quot;  &quot;)
+if err != nil {
+	return err
+}
+ioutil.WriteFile(&quot;routes.json&quot;, data, 0644)
+</code></pre>
+
+<p><code>routes.json</code></p>
+
+<pre><code class="language-json">[
+  {
+    &quot;method&quot;: &quot;POST&quot;,
+    &quot;path&quot;: &quot;/users&quot;,
+    &quot;handler&quot;: &quot;main.createUser&quot;
+  },
+  {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/users&quot;,
+    &quot;handler&quot;: &quot;main.findUser&quot;
+  },
+  {
+    &quot;method&quot;: &quot;PUT&quot;,
+    &quot;path&quot;: &quot;/users&quot;,
+    &quot;handler&quot;: &quot;main.updateUser&quot;
+  },
+  {
+    &quot;method&quot;: &quot;DELETE&quot;,
+    &quot;path&quot;: &quot;/users&quot;,
+    &quot;handler&quot;: &quot;main.deleteUser&quot;
+  }
+]
+</code></pre>
+
+            </section>
+            <footer>
+              <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                <p>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                  <a href="https://github.com/labstack/echo/blob/master/website/content/guide/routing.md">
+                    Edit this page on GitHub
+                  </a>
+                </p>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </div>
+	    <footer class="w3-content w3-container w3-padding-48 w3-center footer">
+  <p>
+    <strong>Echo</strong> by <a href="https://labstack.com">LabStack</a> © 2017 LabStack
+  </p>
+  <p>
+    <a class="icon" href="https://labstack.com/blog">
+      <i class="fa fa-rss" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://github.com/labstack">
+      <i class="fa fa-github" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://facebook.com/labstack">
+      <i class="fa fa-facebook" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://twitter.com/labstack">
+      <i class="fa fa-twitter" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://plus.google.com/+labstack">
+      <i class="fa fa-google-plus" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="mailto:hello@labstack.com?Subject=Hello" target="_top">
+      <i class="fa fa-envelope" aria-hidden="true"></i>
+    </a>
+  </p>
+</footer>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script type="text/javascript">
+docsearch({
+  apiKey: '69dfc65b57ccba29ec34b68aa5b274ed',
+  indexName: 'labstack',
+  inputSelector: '#search-box'
+});
+</script>
+<script src="https://cdn.labstack.com/js/prism.js"></script>
+<script src="https://cdn.labstack.com/js/base.js"></script>
+
+    </div>
+  </div>
+</body>
+</html>

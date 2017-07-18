@@ -1,0 +1,13 @@
+{
+  "name": "trmApp",
+  "version": "0.0.1",
+  "main":"home.js",
+  "author": "Luca Paterlini",
+  "description": "For test ",
+  "dependencies": {
+    "file-base64":  "latest",
+    "fetch-base64": "latest",
+    "read-chunk": "latest",
+    "file-type": "latest"
+  }
+}

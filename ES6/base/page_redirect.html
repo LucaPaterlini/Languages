@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <link rel = "canonical" href = "http://abc.com/" />
+  <script>
+   function newLocation() {
+       window.location("http://www.xyz.com")
+       window.location.replace("http://www.xyz.com")
+       //window.location.reload( "http://www.xyz.com");
+       //window.location.replace("http://www.abc.com");
+   }
+  </script>
+ </head>
+ <body>
+  <input type = "button" value = "Go to new location" onclick="newLocation()">
+ </body>
+</html>

@@ -1,0 +1,2 @@
+devi mettere le tue promise locali
+mongoose.Promise = Promise;

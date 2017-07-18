@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="Handling HTTP request in Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@echo">
+  <meta name="twitter:creator" content="@labstack">
+  <meta name="twitter:title" content="Request | Echo - High performance, minimalist Go web framework">
+  <meta name="twitter:description" content="Handling HTTP request in Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta name="twitter:image" content="https://echo.labstack.com/images/share.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Request">
+  <meta property="og:title" content="Request | Echo - High performance, minimalist Go web framework">
+  <meta property="og:description" content="Handling HTTP request in Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta property="og:url" content="https://echo.labstack.com">
+  <meta property="og:image" content="https://echo.labstack.com/images/share.png">
+  <title>
+    Request | Echo - High performance, minimalist Go web framework
+  </title>
+  <link rel="stylesheet"  
+    href="https://unpkg.com/font-awesome@4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet"
+    href="https://cdn.labstack.com/css/icomoon.css">
+  <link rel="stylesheet" 
+    href="https://unpkg.com/docsearch.js@2.2.1/dist/cdn/docsearch.min.css">
+  <link rel="stylesheet" href="../../css/bsa.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/w3.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/prism.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/base.css">
+  <link rel="icon"
+    type="image/png"
+    href="https://cdn.labstack.com/images/labstack-icon.png">
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-85059636-2', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+
+<body class="docs">
+	<div class="topnav">
+  <nav class="w3-content">
+    <a href="../../index.html"><img class="logo" src="https://cdn.labstack.com/images/echo-logo.svg" alt="Echo"></a>
+    <span class="hide-small">
+      <i class="fa fa-search w3-text-gray"></i>
+      <input id="search-box" type="text" class="w3-input">
+    </span>
+    <span class="menu hide-small hide-medium">
+      
+      
+        <a class="active" href="../../guide">Guide</a>
+      
+        <a href="../../middleware">Middleware</a>
+      
+        <a href="../../cookbook">Cookbook</a>
+      
+      <a href="https://forum.labstack.com">Forum</a>
+    </span>
+    <button class="hamburger hide-large" onclick="toggleSidenav()">
+      <span></span>
+    </button>
+  </nav>
+</div>
+
+  <div class="w3-content">
+    <nav class="sidenav">
+  <div class="w3-container">
+    <button class="w3-button w3-theme w3-round-large" onclick="location.href='/support-echo';">
+      <i class="fa fa-heart" aria-hidden="true"></i> Support Echo
+    </button>
+    
+    <div class="menu">
+      
+        <a class="active" href="../../guide">
+          Guide
+        </a>
+      
+        <a href="../../middleware">
+          Middleware
+        </a>
+      
+        <a href="../../cookbook">
+          Cookbook
+        </a>
+      
+    </div>
+    <div class="sub-menu">
+      
+        
+          <h3><i class='fa fa-book'></i> Guide</h3>
+          
+            <a href="../installation">
+              Installation
+            </a>
+          
+            <a href="../customization/index.html">
+              Customization
+            </a>
+          
+            <a href="../context">
+              Context
+            </a>
+          
+            <a href="../cookies">
+              Cookies
+            </a>
+          
+            <a href="../error-handling">
+              Error Handling
+            </a>
+          
+            <a href="../faq">
+              FAQ
+            </a>
+          
+            <a href="../migration">
+              Migration
+            </a>
+          
+            <a class="active" href="index.html">
+              Request
+            </a>
+          
+            <a href="../response">
+              Response
+            </a>
+          
+            <a href="../routing">
+              Routing
+            </a>
+          
+            <a href="../static-files">
+              Static Files
+            </a>
+          
+            <a href="../templates">
+              Templates
+            </a>
+          
+            <a href="../testing">
+              Testing
+            </a>
+          
+        
+      
+    </div>
+  </div>
+</nav>
+
+    <div class="main">
+      
+
+      <div class="ad">
+  <script async type="text/javascript" src="https://cdn.carbonads.com/carbon.js?zoneid=1673&amp;serve=C6AILKT&amp;placement=echolabstackcom" id="_carbonads_js"></script>
+</div>
+
+
+      <div class="w3-row-padding">
+        <div class="w3-col s12 m10 l10">
+          <div class="w3-panel w3-pale-green w3-leftbar w3-border-green">
+  <p>
+    Check out <a href="../../middleware/cube">cube middleware</a> for HTTP analytics. Measure server latency, data transfer, discover top endpoints, server errors and much more.
+  </p>
+</div>
+
+          <article class="content">
+            <section>
+              <h1>Request</h1>
+              
+
+<h2 id="bind-data">Bind Data</h2>
+
+<p>To bind request body into a Go type use <code>Context#Bind(i interface{})</code>.
+The default binder supports decoding application/json, application/xml and
+application/x-www-form-urlencoded data based on the Content-Type header.</p>
+
+<p>Example below binds the request payload into <code>User</code> struct based on tags:</p>
+
+<pre><code class="language-go">// User
+User struct {
+  Name  string `json:&quot;name&quot; form:&quot;name&quot; query:&quot;name&quot;`
+  Email string `json:&quot;email&quot; form:&quot;email&quot; query:&quot;email&quot;`
+}
+</code></pre>
+
+<pre><code class="language-go">// Handler
+func(c echo.Context) (err error) {
+  u := new(User)
+  if err = c.Bind(u); err != nil {
+    return
+  }
+  return c.JSON(http.StatusOK, u)
+}
+</code></pre>
+
+<h3 id="json-data">JSON Data</h3>
+
+<pre><code class="language-sh">curl \
+  -X POST \
+  http://localhost:1323/users \
+  -H 'Content-Type: application/json' \
+  -d '{&quot;name&quot;:&quot;Joe&quot;,&quot;email&quot;:&quot;joe@labstack&quot;}'
+</code></pre>
+
+<h3 id="form-data">Form Data</h3>
+
+<pre><code class="language-sh">curl \
+  -X POST \
+  http://localhost:1323/users \
+  -d 'name=Joe' \
+  -d 'email=joe@labstack.com'
+</code></pre>
+
+<h3 id="query-parameters">Query Parameters</h3>
+
+<pre><code class="language-sh">curl \
+  -X GET \
+  http://localhost:1323/users\?name\=Joe\&amp;email\=joe@labstack.com
+</code></pre>
+
+<h2 id="custom-binder">Custom Binder</h2>
+
+<p>Custom binder can be registered using <code>Echo#Binder</code>.</p>
+
+<p><em>Example</em></p>
+
+<pre><code class="language-go">type CustomBinder struct {}
+
+func (cb *CustomBinder) Bind(i interface{}, c echo.Context) (err error) {
+	// You may use default binder
+	db := new(echo.DefaultBinder)
+	if err = db.Bind(i, c); err != echo.ErrUnsupportedMediaType {
+		return
+	}
+
+	// Define your custom implementation
+
+	return
+}
+</code></pre>
+
+<h2 id="retrieve-data">Retrieve Data</h2>
+
+<h3 id="form-data-1">Form Data</h3>
+
+<p>Form data can be retrieved by name using <code>Context#FormValue(name string)</code>.</p>
+
+<p><em>Example</em></p>
+
+<pre><code class="language-go">// Handler
+func(c echo.Context) error {
+	name := c.FormValue(&quot;name&quot;)
+	return c.String(http.StatusOK, name)
+}
+</code></pre>
+
+<pre><code class="language-sh">curl \
+  -X POST \
+  http://localhost:1323 \
+  -d 'name=Joe'
+</code></pre>
+
+<p>To bind a custom data type, you can implement <code>Echo#BindUnmarshaler</code> interface.</p>
+
+<p><em>Example</em></p>
+
+<pre><code class="language-go">type Timestamp time.Time
+
+func (t *Timestamp) UnmarshalParam(src string) error {
+	ts, err := time.Parse(time.RFC3339, src)
+	*t = Timestamp(ts)
+	return err
+}
+</code></pre>
+
+<h3 id="query-parameters-1">Query Parameters</h3>
+
+<p>Query parameters can be retrieved by name using <code>Context#QueryParam(name string)</code>.</p>
+
+<p><em>Example</em></p>
+
+<pre><code class="language-go">// Handler
+func(c echo.Context) error {
+	name := c.QueryParam(&quot;name&quot;)
+	return c.String(http.StatusOK, name)
+})
+</code></pre>
+
+<pre><code class="language-sh">curl \
+  -X GET \
+  http://localhost:1323\?name\=Joe
+</code></pre>
+
+<p>Similar to form data, custom data type can be bind using <code>Context#QueryParam(name string)</code>.</p>
+
+<h3 id="path-parameters">Path Parameters</h3>
+
+<p>Registered path parameters can be retrieved by name using <code>Context#Param(name string) string</code>.</p>
+
+<p><em>Example</em></p>
+
+<pre><code class="language-go">e.GET(&quot;/users/:name&quot;, func(c echo.Context) error {
+	name := c.Param(&quot;name&quot;)
+	return c.String(http.StatusOK, name)
+})
+</code></pre>
+
+<pre><code class="language-sh">$ curl http://localhost:1323/users/Joe
+</code></pre>
+
+<h2 id="validate-data">Validate Data</h2>
+
+<p>Echo doesn&rsquo;t have a built-in data validation capabilities, however, you can register
+a custom validator using <code>Echo#Validator</code> and leverage third-party <a href="https://github.com/avelino/awesome-go#validation">libraries</a>.</p>
+
+<p>Example below uses <a href="https://github.com/go-playground/validator">https://github.com/go-playground/validator</a> framework for validation:</p>
+
+<pre><code class="language-go">type (
+	User struct {
+		Name  string `json:&quot;name&quot; validate:&quot;required&quot;`
+		Email string `json:&quot;email&quot; validate:&quot;required,email&quot;`
+	}
+
+	CustomValidator struct {
+		validator *validator.Validate
+	}
+)
+
+func (cv *CustomValidator) Validate(i interface{}) error {
+	return cv.validator.Struct(i)
+}
+
+func main() {
+	e := echo.New()
+	e.Validator = &amp;CustomValidator{validator: validator.New()}
+	e.POST(&quot;/users&quot;, func(c echo.Context) (err error) {
+		u := new(User)
+		if err = c.Bind(u); err != nil {
+			return
+		}
+		if err = c.Validate(u); err != nil {
+			return
+		}
+		return c.JSON(http.StatusOK, u)
+	})
+	e.Logger.Fatal(e.Start(&quot;:1323&quot;))
+}
+</code></pre>
+
+<pre><code class="language-sh">curl \
+  -X POST \
+  http://localhost:1323/users \
+  -H 'Content-Type: application/json' \
+  -d '{&quot;name&quot;:&quot;Joe&quot;,&quot;email&quot;:&quot;joe@invalid-domain&quot;}'
+{&quot;message&quot;:&quot;Key: 'User.Email' Error:Field validation for 'Email' failed on the 'email' tag&quot;}
+</code></pre>
+
+            </section>
+            <footer>
+              <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                <p>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                  <a href="https://github.com/labstack/echo/blob/master/website/content/guide/request.md">
+                    Edit this page on GitHub
+                  </a>
+                </p>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </div>
+	    <footer class="w3-content w3-container w3-padding-48 w3-center footer">
+  <p>
+    <strong>Echo</strong> by <a href="https://labstack.com">LabStack</a> © 2017 LabStack
+  </p>
+  <p>
+    <a class="icon" href="https://labstack.com/blog">
+      <i class="fa fa-rss" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://github.com/labstack">
+      <i class="fa fa-github" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://facebook.com/labstack">
+      <i class="fa fa-facebook" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://twitter.com/labstack">
+      <i class="fa fa-twitter" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://plus.google.com/+labstack">
+      <i class="fa fa-google-plus" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="mailto:hello@labstack.com?Subject=Hello" target="_top">
+      <i class="fa fa-envelope" aria-hidden="true"></i>
+    </a>
+  </p>
+</footer>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script type="text/javascript">
+docsearch({
+  apiKey: '69dfc65b57ccba29ec34b68aa5b274ed',
+  indexName: 'labstack',
+  inputSelector: '#search-box'
+});
+</script>
+<script src="https://cdn.labstack.com/js/prism.js"></script>
+<script src="https://cdn.labstack.com/js/base.js"></script>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="Twitter Like API recipe for Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@echo">
+  <meta name="twitter:creator" content="@labstack">
+  <meta name="twitter:title" content="Twitter Like API Recipe | Echo - High performance, minimalist Go web framework">
+  <meta name="twitter:description" content="Twitter Like API recipe for Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta name="twitter:image" content="https://echo.labstack.com/images/share.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Twitter Like API Recipe">
+  <meta property="og:title" content="Twitter Like API Recipe | Echo - High performance, minimalist Go web framework">
+  <meta property="og:description" content="Twitter Like API recipe for Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta property="og:url" content="https://echo.labstack.com">
+  <meta property="og:image" content="https://echo.labstack.com/images/share.png">
+  <title>
+    Twitter Like API Recipe | Echo - High performance, minimalist Go web framework
+  </title>
+  <link rel="stylesheet"  
+    href="https://unpkg.com/font-awesome@4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet"
+    href="https://cdn.labstack.com/css/icomoon.css">
+  <link rel="stylesheet" 
+    href="https://unpkg.com/docsearch.js@2.2.1/dist/cdn/docsearch.min.css">
+  <link rel="stylesheet" href="../css/bsa.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/w3.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/prism.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/base.css">
+  <link rel="icon"
+    type="image/png"
+    href="https://cdn.labstack.com/images/labstack-icon.png">
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-85059636-2', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+
+<body class="docs">
+	<div class="topnav">
+  <nav class="w3-content">
+    <a href="../index.html"><img class="logo" src="https://cdn.labstack.com/images/echo-logo.svg" alt="Echo"></a>
+    <span class="hide-small">
+      <i class="fa fa-search w3-text-gray"></i>
+      <input id="search-box" type="text" class="w3-input">
+    </span>
+    <span class="menu hide-small hide-medium">
+      
+      
+        <a href="../guide">Guide</a>
+      
+        <a href="../middleware">Middleware</a>
+      
+        <a class="active" href="../cookbook">Cookbook</a>
+      
+      <a href="https://forum.labstack.com">Forum</a>
+    </span>
+    <button class="hamburger hide-large" onclick="toggleSidenav()">
+      <span></span>
+    </button>
+  </nav>
+</div>
+
+  <div class="w3-content">
+    <nav class="sidenav">
+  <div class="w3-container">
+    <button class="w3-button w3-theme w3-round-large" onclick="location.href='/support-echo';">
+      <i class="fa fa-heart" aria-hidden="true"></i> Support Echo
+    </button>
+    
+    <div class="menu">
+      
+        <a href="../guide">
+          Guide
+        </a>
+      
+        <a href="../middleware">
+          Middleware
+        </a>
+      
+        <a class="active" href="../cookbook">
+          Cookbook
+        </a>
+      
+    </div>
+    <div class="sub-menu">
+      
+        
+          <h3><i class='fa fa-code'></i> Cookbook</h3>
+          
+            <a href="hello-world">
+              Hello World
+            </a>
+          
+            <a href="auto-tls">
+              Auto TLS
+            </a>
+          
+            <a href="cors">
+              CORS
+            </a>
+          
+            <a href="crud">
+              CRUD
+            </a>
+          
+            <a href="embed-resources">
+              Embed Resources
+            </a>
+          
+            <a href="file-upload">
+              File Upload
+            </a>
+          
+            <a href="google-app-engine">
+              Google App Engine
+            </a>
+          
+            <a href="graceful-shutdown">
+              Graceful Shutdown
+            </a>
+          
+            <a href="http2">
+              HTTP/2
+            </a>
+          
+            <a href="http2-server-push">
+              HTTP/2 Server Push
+            </a>
+          
+            <a href="jsonp">
+              JSONP
+            </a>
+          
+            <a href="jwt/index.html">
+              JWT
+            </a>
+          
+            <a href="load-balancing">
+              Load Balancing
+            </a>
+          
+            <a href="middleware">
+              Middleware
+            </a>
+          
+            <a href="reverse-proxy/index.html">
+              Reverse Proxy
+            </a>
+          
+            <a href="streaming-response">
+              Streaming Response
+            </a>
+          
+            <a href="subdomains">
+              Subdomains
+            </a>
+          
+            <a class="active" href="twitter">
+              Twitter
+            </a>
+          
+            <a href="websocket">
+              WebSocket
+            </a>
+          
+        
+      
+    </div>
+  </div>
+</nav>
+
+    <div class="main">
+      
+
+      <div class="ad">
+  <script async type="text/javascript" src="https://cdn.carbonads.com/carbon.js?zoneid=1673&amp;serve=C6AILKT&amp;placement=echolabstackcom" id="_carbonads_js"></script>
+</div>
+
+
+      <div class="w3-row-padding">
+        <div class="w3-col s12 m10 l10">
+          <div class="w3-panel w3-pale-green w3-leftbar w3-border-green">
+  <p>
+    Check out <a href="../middleware/cube">cube middleware</a> for HTTP analytics. Measure server latency, data transfer, discover top endpoints, server errors and much more.
+  </p>
+</div>
+
+          <article class="content">
+            <section>
+              <h1>Twitter Like API Recipe</h1>
+              
+
+<p>This recipe demonstrates how to create a Twitter like REST API using MongoDB (Database),
+JWT (API security) and JSON (Data exchange).</p>
+
+<h2 id="models">Models</h2>
+
+<p><code>user.go</code></p>
+
+<pre data-src="https://raw.githubusercontent.com/labstack/echox/master/cookbook/twitter/model/user.go"></pre>
+
+
+<p><code>post.go</code></p>
+
+<pre data-src="https://raw.githubusercontent.com/labstack/echox/master/cookbook/twitter/model/post.go"></pre>
+
+
+<h2 id="handlers">Handlers</h2>
+
+<p><code>handler.go</code></p>
+
+<pre data-src="https://raw.githubusercontent.com/labstack/echox/master/cookbook/twitter/handler/handler.go"></pre>
+
+
+<p><code>user.go</code></p>
+
+<pre data-src="https://raw.githubusercontent.com/labstack/echox/master/cookbook/twitter/handler/user.go"></pre>
+
+
+<p><code>post.go</code></p>
+
+<pre data-src="https://raw.githubusercontent.com/labstack/echox/master/cookbook/twitter/handler/post.go"></pre>
+
+
+<h2 id="server">Server</h2>
+
+<p><code>server.go</code></p>
+
+<pre data-src="https://raw.githubusercontent.com/labstack/echox/master/cookbook/twitter/server.go"></pre>
+
+
+<h2 id="api">API</h2>
+
+<h3 id="signup">Signup</h3>
+
+<p>User signup</p>
+
+<ul>
+<li>Retrieve user credentials from the body and validate against database.</li>
+<li>For invalid email or password, send <code>400 - Bad Request</code> response.</li>
+<li>For valid email and password, save user in database and send <code>201 - Created</code> response.</li>
+</ul>
+
+<h4 id="request">Request</h4>
+
+<pre><code class="language-sh">curl \
+  -X POST \
+  http://localhost:1323/signup \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;email&quot;:&quot;jon@labstack.com&quot;,&quot;password&quot;:&quot;shhh!&quot;}'
+</code></pre>
+
+<h4 id="response">Response</h4>
+
+<p><code>201 - Created</code></p>
+
+<pre><code class="language-js">{
+  &quot;id&quot;: &quot;58465b4ea6fe886d3215c6df&quot;,
+  &quot;email&quot;: &quot;jon@labstack.com&quot;,
+  &quot;password&quot;: &quot;shhh!&quot;
+}
+</code></pre>
+
+<h3 id="login">Login</h3>
+
+<p>User login</p>
+
+<ul>
+<li>Retrieve user credentials from the body and validate against database.</li>
+<li>For invalid credentials, send <code>401 - Unauthorized</code> response.</li>
+<li>For valid credentials, send <code>200 - OK</code> response:
+
+<ul>
+<li>Generate JWT for the user and send it as response.</li>
+<li>Each subsequent request must include JWT in the <code>Authorization</code> header.</li>
+</ul></li>
+</ul>
+
+<p>Method: <code>POST</code><br>
+Path: <code>/login</code></p>
+
+<h4 id="request-1">Request</h4>
+
+<pre><code class="language-sh">curl \
+  -X POST \
+  http://localhost:1323/login \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;email&quot;:&quot;jon@labstack.com&quot;,&quot;password&quot;:&quot;shhh!&quot;}'
+</code></pre>
+
+<h4 id="response-1">Response</h4>
+
+<p><code>200 - OK</code></p>
+
+<pre><code class="language-js">{
+  &quot;id&quot;: &quot;58465b4ea6fe886d3215c6df&quot;,
+  &quot;email&quot;: &quot;jon@labstack.com&quot;,
+  &quot;token&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0ODEyNjUxMjgsImlkIjoiNTg0NjViNGVhNmZlODg2ZDMyMTVjNmRmIn0.1IsGGxko1qMCsKkJDQ1NfmrZ945XVC9uZpcvDnKwpL0&quot;
+}
+</code></pre>
+
+<p>Client should store the token, for browsers, you may use local storage.</p>
+
+<h3 id="follow">Follow</h3>
+
+<p>Follow a user</p>
+
+<ul>
+<li>For invalid token, send <code>400 - Bad Request</code> response.</li>
+<li>For valid token:
+
+<ul>
+<li>If user is not found, send <code>404 - Not Found</code> response.</li>
+<li>Add a follower to the specified user in the path parameter and send <code>200 - OK</code> response.</li>
+</ul></li>
+</ul>
+
+<p>Method: <code>POST</code> <br>
+Path: <code>/follow/:id</code></p>
+
+<h4 id="request-2">Request</h4>
+
+<pre><code class="language-sh">curl \
+  -X POST \
+  http://localhost:1323/follow/58465b4ea6fe886d3215c6df \
+  -H &quot;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0ODEyNjUxMjgsImlkIjoiNTg0NjViNGVhNmZlODg2ZDMyMTVjNmRmIn0.1IsGGxko1qMCsKkJDQ1NfmrZ945XVC9uZpcvDnKwpL0&quot;
+</code></pre>
+
+<h4 id="response-2">Response</h4>
+
+<p><code>200 - OK</code></p>
+
+<h3 id="post">Post</h3>
+
+<p>Post a message to specified user</p>
+
+<ul>
+<li>For invalid request payload, send <code>400 - Bad Request</code> response.</li>
+<li>If user is not found, send <code>404 - Not Found</code> response.</li>
+<li>Otherwise save post in the database and return it via <code>201 - Created</code> response.</li>
+</ul>
+
+<p>Method: <code>POST</code> <br>
+Path: <code>/posts</code></p>
+
+<h4 id="request-3">Request</h4>
+
+<pre><code class="language-sh">curl \
+  -X POST \
+  http://localhost:1323/posts \
+  -H &quot;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0ODEyNjUxMjgsImlkIjoiNTg0NjViNGVhNmZlODg2ZDMyMTVjNmRmIn0.1IsGGxko1qMCsKkJDQ1NfmrZ945XVC9uZpcvDnKwpL0&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;to&quot;:&quot;58465b4ea6fe886d3215c6df&quot;,&quot;message&quot;:&quot;hello&quot;}'
+</code></pre>
+
+<h4 id="response-3">Response</h4>
+
+<p><code>201 - Created</code></p>
+
+<pre><code class="language-js">{
+  &quot;id&quot;: &quot;584661b9a6fe8871a3804cba&quot;,
+  &quot;to&quot;: &quot;58465b4ea6fe886d3215c6df&quot;,
+  &quot;from&quot;: &quot;58465b4ea6fe886d3215c6df&quot;,
+  &quot;message&quot;: &quot;hello&quot;
+}
+</code></pre>
+
+<h3 id="feed">Feed</h3>
+
+<p>List most recent messages based on optional <code>page</code> and <code>limit</code> query parameters</p>
+
+<p>Method: <code>GET</code> <br>
+Path: <code>/feed?page=1&amp;limit=5</code></p>
+
+<h4 id="request-4">Request</h4>
+
+<pre><code class="language-sh">curl \
+  -X GET \
+  http://localhost:1323/feed \
+  -H &quot;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0ODEyNjUxMjgsImlkIjoiNTg0NjViNGVhNmZlODg2ZDMyMTVjNmRmIn0.1IsGGxko1qMCsKkJDQ1NfmrZ945XVC9uZpcvDnKwpL0&quot;
+</code></pre>
+
+<h4 id="response-4">Response</h4>
+
+<p><code>200 - OK</code></p>
+
+<pre><code class="language-js">[
+  {
+    &quot;id&quot;: &quot;584661b9a6fe8871a3804cba&quot;,
+    &quot;to&quot;: &quot;58465b4ea6fe886d3215c6df&quot;,
+    &quot;from&quot;: &quot;58465b4ea6fe886d3215c6df&quot;,
+    &quot;message&quot;: &quot;hello&quot;
+  }
+]
+</code></pre>
+
+<h2 id="source-code-hahahugoshortcode-7hbhb"><a href="https://github.com/labstack/echox/tree/master/cookbook/twitter
+">Source Code</a></h2>
+
+<h2 id="maintainers">Maintainers</h2>
+
+<ul>
+<li><a href="https://github.com/vishr">vishr</a></li>
+</ul>
+
+            </section>
+            <footer>
+              <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                <p>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                  <a href="https://github.com/labstack/echo/blob/master/website/content/cookbook/twitter.md">
+                    Edit this page on GitHub
+                  </a>
+                </p>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </div>
+	    <footer class="w3-content w3-container w3-padding-48 w3-center footer">
+  <p>
+    <strong>Echo</strong> by <a href="https://labstack.com">LabStack</a> © 2017 LabStack
+  </p>
+  <p>
+    <a class="icon" href="https://labstack.com/blog">
+      <i class="fa fa-rss" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://github.com/labstack">
+      <i class="fa fa-github" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://facebook.com/labstack">
+      <i class="fa fa-facebook" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://twitter.com/labstack">
+      <i class="fa fa-twitter" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://plus.google.com/+labstack">
+      <i class="fa fa-google-plus" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="mailto:hello@labstack.com?Subject=Hello" target="_top">
+      <i class="fa fa-envelope" aria-hidden="true"></i>
+    </a>
+  </p>
+</footer>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script type="text/javascript">
+docsearch({
+  apiKey: '69dfc65b57ccba29ec34b68aa5b274ed',
+  indexName: 'labstack',
+  inputSelector: '#search-box'
+});
+</script>
+<script src="https://cdn.labstack.com/js/prism.js"></script>
+<script src="https://cdn.labstack.com/js/base.js"></script>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="Context in Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@echo">
+  <meta name="twitter:creator" content="@labstack">
+  <meta name="twitter:title" content="Context | Echo - High performance, minimalist Go web framework">
+  <meta name="twitter:description" content="Context in Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta name="twitter:image" content="https://echo.labstack.com/images/share.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Context">
+  <meta property="og:title" content="Context | Echo - High performance, minimalist Go web framework">
+  <meta property="og:description" content="Context in Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta property="og:url" content="https://echo.labstack.com">
+  <meta property="og:image" content="https://echo.labstack.com/images/share.png">
+  <title>
+    Context | Echo - High performance, minimalist Go web framework
+  </title>
+  <link rel="stylesheet"  
+    href="https://unpkg.com/font-awesome@4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet"
+    href="https://cdn.labstack.com/css/icomoon.css">
+  <link rel="stylesheet" 
+    href="https://unpkg.com/docsearch.js@2.2.1/dist/cdn/docsearch.min.css">
+  <link rel="stylesheet" href="../css/bsa.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/w3.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/prism.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/base.css">
+  <link rel="icon"
+    type="image/png"
+    href="https://cdn.labstack.com/images/labstack-icon.png">
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-85059636-2', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+
+<body class="docs">
+	<div class="topnav">
+  <nav class="w3-content">
+    <a href="../index.html"><img class="logo" src="https://cdn.labstack.com/images/echo-logo.svg" alt="Echo"></a>
+    <span class="hide-small">
+      <i class="fa fa-search w3-text-gray"></i>
+      <input id="search-box" type="text" class="w3-input">
+    </span>
+    <span class="menu hide-small hide-medium">
+      
+      
+        <a class="active" href="../guide">Guide</a>
+      
+        <a href="../middleware">Middleware</a>
+      
+        <a href="../cookbook">Cookbook</a>
+      
+      <a href="https://forum.labstack.com">Forum</a>
+    </span>
+    <button class="hamburger hide-large" onclick="toggleSidenav()">
+      <span></span>
+    </button>
+  </nav>
+</div>
+
+  <div class="w3-content">
+    <nav class="sidenav">
+  <div class="w3-container">
+    <button class="w3-button w3-theme w3-round-large" onclick="location.href='/support-echo';">
+      <i class="fa fa-heart" aria-hidden="true"></i> Support Echo
+    </button>
+    
+    <div class="menu">
+      
+        <a class="active" href="../guide">
+          Guide
+        </a>
+      
+        <a href="../middleware">
+          Middleware
+        </a>
+      
+        <a href="../cookbook">
+          Cookbook
+        </a>
+      
+    </div>
+    <div class="sub-menu">
+      
+        
+          <h3><i class='fa fa-book'></i> Guide</h3>
+          
+            <a href="installation">
+              Installation
+            </a>
+          
+            <a href="customization/index.html">
+              Customization
+            </a>
+          
+            <a class="active" href="context">
+              Context
+            </a>
+          
+            <a href="cookies">
+              Cookies
+            </a>
+          
+            <a href="error-handling">
+              Error Handling
+            </a>
+          
+            <a href="faq">
+              FAQ
+            </a>
+          
+            <a href="migration">
+              Migration
+            </a>
+          
+            <a href="request/index.html">
+              Request
+            </a>
+          
+            <a href="response">
+              Response
+            </a>
+          
+            <a href="routing">
+              Routing
+            </a>
+          
+            <a href="static-files">
+              Static Files
+            </a>
+          
+            <a href="templates">
+              Templates
+            </a>
+          
+            <a href="testing">
+              Testing
+            </a>
+          
+        
+      
+    </div>
+  </div>
+</nav>
+
+    <div class="main">
+      
+
+      <div class="ad">
+  <script async type="text/javascript" src="https://cdn.carbonads.com/carbon.js?zoneid=1673&amp;serve=C6AILKT&amp;placement=echolabstackcom" id="_carbonads_js"></script>
+</div>
+
+
+      <div class="w3-row-padding">
+        <div class="w3-col s12 m10 l10">
+          <div class="w3-panel w3-pale-green w3-leftbar w3-border-green">
+  <p>
+    Check out <a href="../middleware/cube">cube middleware</a> for HTTP analytics. Measure server latency, data transfer, discover top endpoints, server errors and much more.
+  </p>
+</div>
+
+          <article class="content">
+            <section>
+              <h1>Context</h1>
+              
+
+<p><code>echo.Context</code> represents the context of the current HTTP request. It holds request and
+response reference, path, path parameters, data, registered handler and APIs to read
+request and write response. As Context is an interface, it is easy to extend it with
+custom APIs.</p>
+
+<h2 id="extending-context">Extending Context</h2>
+
+<p><strong>Define a custom context</strong></p>
+
+<pre><code class="language-go">type CustomContext struct {
+	echo.Context
+}
+
+func (c *CustomContext) Foo() {
+	println(&quot;foo&quot;)
+}
+
+func (c *CustomContext) Bar() {
+	println(&quot;bar&quot;)
+}
+</code></pre>
+
+<p><strong>Create a middleware to extend default context</strong></p>
+
+<pre><code class="language-go">e.Use(func(h echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		cc := &amp;CustomContext{c}
+		return h(cc)
+	}
+})
+</code></pre>
+
+<blockquote>
+<p>This middleware should be registered before any other middleware.</p>
+</blockquote>
+
+<p><strong>Use in handler</strong></p>
+
+<pre><code class="language-go">e.GET(&quot;/&quot;, func(c echo.Context) error {
+	cc := c.(*CustomContext)
+	cc.Foo()
+	cc.Bar()
+	return cc.String(200, &quot;OK&quot;)
+})
+</code></pre>
+
+            </section>
+            <footer>
+              <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                <p>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                  <a href="https://github.com/labstack/echo/blob/master/website/content/guide/context.md">
+                    Edit this page on GitHub
+                  </a>
+                </p>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </div>
+	    <footer class="w3-content w3-container w3-padding-48 w3-center footer">
+  <p>
+    <strong>Echo</strong> by <a href="https://labstack.com">LabStack</a> © 2017 LabStack
+  </p>
+  <p>
+    <a class="icon" href="https://labstack.com/blog">
+      <i class="fa fa-rss" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://github.com/labstack">
+      <i class="fa fa-github" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://facebook.com/labstack">
+      <i class="fa fa-facebook" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://twitter.com/labstack">
+      <i class="fa fa-twitter" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://plus.google.com/+labstack">
+      <i class="fa fa-google-plus" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="mailto:hello@labstack.com?Subject=Hello" target="_top">
+      <i class="fa fa-envelope" aria-hidden="true"></i>
+    </a>
+  </p>
+</footer>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script type="text/javascript">
+docsearch({
+  apiKey: '69dfc65b57ccba29ec34b68aa5b274ed',
+  indexName: 'labstack',
+  inputSelector: '#search-box'
+});
+</script>
+<script src="https://cdn.labstack.com/js/prism.js"></script>
+<script src="https://cdn.labstack.com/js/base.js"></script>
+
+    </div>
+  </div>
+</body>
+</html>

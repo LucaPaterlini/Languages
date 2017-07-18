@@ -1,0 +1,9 @@
+Differences from c++
+Type unsafe ( no type declaration)
+Can't directly handle
+A lot of commands can be added inside the loop
+label break/continue
+Function Constructor ancora più generiche le funzioni
+
+Cose strane splice delete and append from same origin
+Esistono le weakmap

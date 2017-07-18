@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="Reverse proxy middleware for Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@echo">
+  <meta name="twitter:creator" content="@labstack">
+  <meta name="twitter:title" content="Proxy Middleware | Echo - High performance, minimalist Go web framework">
+  <meta name="twitter:description" content="Reverse proxy middleware for Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta name="twitter:image" content="https://echo.labstack.com/images/share.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Proxy Middleware">
+  <meta property="og:title" content="Proxy Middleware | Echo - High performance, minimalist Go web framework">
+  <meta property="og:description" content="Reverse proxy middleware for Echo | Echo is a high performance, extensible, minimalist web framework for Go (Golang).">
+  <meta property="og:url" content="https://echo.labstack.com">
+  <meta property="og:image" content="https://echo.labstack.com/images/share.png">
+  <title>
+    Proxy Middleware | Echo - High performance, minimalist Go web framework
+  </title>
+  <link rel="stylesheet"  
+    href="https://unpkg.com/font-awesome@4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet"
+    href="https://cdn.labstack.com/css/icomoon.css">
+  <link rel="stylesheet" 
+    href="https://unpkg.com/docsearch.js@2.2.1/dist/cdn/docsearch.min.css">
+  <link rel="stylesheet" href="../css/bsa.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/w3.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/prism.css">
+  <link rel="stylesheet" href="https://cdn.labstack.com/css/base.css">
+  <link rel="icon"
+    type="image/png"
+    href="https://cdn.labstack.com/images/labstack-icon.png">
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-85059636-2', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+
+<body class="docs">
+	<div class="topnav">
+  <nav class="w3-content">
+    <a href="../index.html"><img class="logo" src="https://cdn.labstack.com/images/echo-logo.svg" alt="Echo"></a>
+    <span class="hide-small">
+      <i class="fa fa-search w3-text-gray"></i>
+      <input id="search-box" type="text" class="w3-input">
+    </span>
+    <span class="menu hide-small hide-medium">
+      
+      
+        <a href="../guide">Guide</a>
+      
+        <a class="active" href="../middleware">Middleware</a>
+      
+        <a href="../cookbook">Cookbook</a>
+      
+      <a href="https://forum.labstack.com">Forum</a>
+    </span>
+    <button class="hamburger hide-large" onclick="toggleSidenav()">
+      <span></span>
+    </button>
+  </nav>
+</div>
+
+  <div class="w3-content">
+    <nav class="sidenav">
+  <div class="w3-container">
+    <button class="w3-button w3-theme w3-round-large" onclick="location.href='/support-echo';">
+      <i class="fa fa-heart" aria-hidden="true"></i> Support Echo
+    </button>
+    
+    <div class="menu">
+      
+        <a href="../guide">
+          Guide
+        </a>
+      
+        <a class="active" href="../middleware">
+          Middleware
+        </a>
+      
+        <a href="../cookbook">
+          Cookbook
+        </a>
+      
+    </div>
+    <div class="sub-menu">
+      
+        
+          <h3><i class='fa fa-filter'></i> Middleware</h3>
+          
+            <a href="cube">
+              Cube
+            </a>
+          
+            <a href="gzip">
+              Gzip
+            </a>
+          
+            <a href="logger">
+              Logger
+            </a>
+          
+            <a href="recover">
+              Recover
+            </a>
+          
+            <a href="basic-auth">
+              Basic Auth
+            </a>
+          
+            <a href="casbin-auth">
+              Casbin Auth
+            </a>
+          
+            <a href="key-auth">
+              Key Auth
+            </a>
+          
+            <a href="cors">
+              CORS
+            </a>
+          
+            <a href="csrf">
+              CSRF
+            </a>
+          
+            <a href="jwt">
+              JWT
+            </a>
+          
+            <a href="session">
+              Session
+            </a>
+          
+            <a href="body-dump">
+              Body Dump
+            </a>
+          
+            <a href="body-limit">
+              Body Limit
+            </a>
+          
+            <a href="secure">
+              Secure
+            </a>
+          
+            <a href="method-override">
+              Method Override
+            </a>
+          
+            <a href="request-id">
+              Request ID
+            </a>
+          
+            <a href="static/index.html">
+              Static
+            </a>
+          
+            <a class="active" href="proxy">
+              Proxy
+            </a>
+          
+            <a href="redirect">
+              Redirect
+            </a>
+          
+            <a href="trailing-slash">
+              Trailing Slash
+            </a>
+          
+        
+      
+    </div>
+  </div>
+</nav>
+
+    <div class="main">
+      
+
+      <div class="ad">
+  <script async type="text/javascript" src="https://cdn.carbonads.com/carbon.js?zoneid=1673&amp;serve=C6AILKT&amp;placement=echolabstackcom" id="_carbonads_js"></script>
+</div>
+
+
+      <div class="w3-row-padding">
+        <div class="w3-col s12 m10 l10">
+          <div class="w3-panel w3-pale-green w3-leftbar w3-border-green">
+  <p>
+    Check out <a href="cube">cube middleware</a> for HTTP analytics. Measure server latency, data transfer, discover top endpoints, server errors and much more.
+  </p>
+</div>
+
+          <article class="content">
+            <section>
+              <h1>Proxy Middleware</h1>
+              
+
+<p>Proxy provides an HTTP/WebSocket reverse proxy middleware. It forwards a request
+to upstream server using a configured load balancing technique.</p>
+
+<p><em>Usage</em></p>
+
+<pre><code class="language-go">url1, err := url.Parse(&quot;http://localhost:8081&quot;)
+if err != nil {
+  e.Logger.Fatal(err)
+}
+url2, err := url.Parse(&quot;http://localhost:8082&quot;)
+if err != nil {
+  e.Logger.Fatal(err)
+}
+e.Use(middleware.Proxy(&amp;middleware.RoundRobinBalancer{
+  Targets: []*middleware.ProxyTarget{
+    &amp;middleware.ProxyTarget{
+      URL: url1,
+    },
+    &amp;middleware.ProxyTarget{
+      URL: url2,
+    },
+  },
+}))
+</code></pre>
+
+<h2 id="custom-configuration">Custom Configuration</h2>
+
+<p><em>Usage</em></p>
+
+<pre><code class="language-go">e := echo.New()
+e.Use(middleware.ProxyWithConfig(middleware.ProxyConfig{}))
+</code></pre>
+
+<h2 id="configuration">Configuration</h2>
+
+<pre><code class="language-go">// ProxyConfig defines the config for Proxy middleware.
+ProxyConfig struct {
+  // Skipper defines a function to skip middleware.
+  Skipper Skipper
+
+  // Balancer defines a load balancing technique.
+  // Required.
+  // Possible values:
+  // - RandomBalancer
+  // - RoundRobinBalancer
+  Balancer ProxyBalancer
+}
+</code></pre>
+
+<p><em>Default Configuration</em></p>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Skipper</td>
+<td>DefaultSkipper</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="example-hahahugoshortcode-1hbhb"><a href="../cookbook/reverse-proxy/index.html">Example</a></h2>
+
+            </section>
+            <footer>
+              <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                <p>
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                  <a href="https://github.com/labstack/echo/blob/master/website/content/middleware/proxy.md">
+                    Edit this page on GitHub
+                  </a>
+                </p>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </div>
+	    <footer class="w3-content w3-container w3-padding-48 w3-center footer">
+  <p>
+    <strong>Echo</strong> by <a href="https://labstack.com">LabStack</a> © 2017 LabStack
+  </p>
+  <p>
+    <a class="icon" href="https://labstack.com/blog">
+      <i class="fa fa-rss" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://github.com/labstack">
+      <i class="fa fa-github" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://facebook.com/labstack">
+      <i class="fa fa-facebook" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://twitter.com/labstack">
+      <i class="fa fa-twitter" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="https://plus.google.com/+labstack">
+      <i class="fa fa-google-plus" aria-hidden="true"></i>
+    </a>
+    <a class="icon" href="mailto:hello@labstack.com?Subject=Hello" target="_top">
+      <i class="fa fa-envelope" aria-hidden="true"></i>
+    </a>
+  </p>
+</footer>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script type="text/javascript">
+docsearch({
+  apiKey: '69dfc65b57ccba29ec34b68aa5b274ed',
+  indexName: 'labstack',
+  inputSelector: '#search-box'
+});
+</script>
+<script src="https://cdn.labstack.com/js/prism.js"></script>
+<script src="https://cdn.labstack.com/js/base.js"></script>
+
+    </div>
+  </div>
+</body>
+</html>

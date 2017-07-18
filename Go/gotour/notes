@@ -1,0 +1,16 @@
+cose fighe defer agisce alla morte dello scope ed esecuzione in pila
+puntatori uguali a c
+accesso ai campi della struttura tramite puntatori
+non scordarti la pila dei defer che vengono attivati alla chiusura dello scope
+Cose rischiose settare la len e la cap a valori diversi e avere dei valori nascosti
+accessibili da puntatori
+Cose rischiose tipo quando cancelli un elemento da un hash able, ci rimane zero con
+l'attributo presente a falso
+GO non ha le classi
+Come finta clase fa la stessa cosa,
+mentre se il costrutto sui si fare riferimento
+lo si passa ad una funzione va proprio messo lo * di puntatore
+Roba strana quando assegni un interfaccia nill, puoi mettere una seconda variabile che ti dice se il tipo è corretto
+di modo che non vada in panic il sistema
+EOF diventa un errore su cui fare affidamento per la lettura di un Reader.
+Buona gestione della concorrenza, con thread leggeri
