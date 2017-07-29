@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.test import TestCase
-from weblog.models import Blog,Author,Entry
+from weblog.models import Blog,Author,Entry, ThemeBlog,EntryDetails
 from django.db.models import F,Q
 from datetime import date
 from pytz import timezone
@@ -111,4 +111,69 @@ class MqTestCase(TestCase):
     def test_complex_lookups_with_q_objects(self):
         Q(question_startswith='What')
 
-    def test_
+    def test_copying_model_instances(self):
+        preload()
+        blog = Blog(name='My Blog', tagline="Blogging is easy")
+        blog.save()
+        blog.pk = None
+        blog.save()
+        self.assertEquals(Blog.objects.get(pk=4).name, 'My Blog')
+        # inheritance
+        django_blog = ThemeBlog(name='Django', tagline='Django is easy', theme='python')
+        django_blog.save()
+        django_blog.id = None
+        django_blog.pk = None
+        django_blog.save()
+        self.assertEquals(str(Blog.objects.all()),
+            "<QuerySet [<Blog: Cheddar Talk>, <Blog: Beatles Blog>, <Blog: My Blog>, <Blog: My Blog>, <Blog: Django>, <Blog: Django>]>")
+        #attention it doesn't copy thre realtions
+        entry = Entry.objects.all()[0]
+        old_authors = entry.authors.all()
+        entry.pk = None
+        entry.save()
+        entry.authors.set(old_authors)
+        en2 = Entry.objects.all()[0]
+        self.assertTrue(entry.headline==en2.headline)
+
+    def test_updating_multiple_objs(self):
+        preload()
+        Entry.objects.filter(pub_date__year=2007).update(headline='Everything is the same')
+        b = Blog.objects.get(pk=1)
+        Entry.objects.all().update(blog=b)
+        self.assertEquals(1,Entry.objects.select_related().filter(blog=b).update(headline='Everithing is the same'))
+        # for item in myquery_set: item.save()
+
+    def test_one_to_many_test(self):
+        preload()
+        b = Blog.objects.get(id=1)
+        self.assertEquals("<QuerySet [<Entry: headline>]>",str(b.entry_set.all()))
+        self.assertEquals("<QuerySet []>",str(b.entry_set.filter(headline__contains='Lennon')))
+        self.assertEquals(1,b.entry_set.count())
+
+    def test_custom_reverse_manager(self):
+        preload()
+        b = Blog.objects.get(id=1)
+        b.entry_set(manager='objects').all()
+
+    def test_many_to_many(self):
+        preload()
+        e = Entry.objects.get(id=1)
+        e.authors.all()
+        self.assertEquals(5,e.authors.count())
+        e.authors.filter(name__contains='John')
+
+        a = Author.objects.get(id=3)
+        self.assertEquals('headline',a.entry_set.all()[0].headline)
+
+    def test_one_to_one(self):
+        preload()
+        e = Entry.objects.get(id=1)
+        EntryDetails(entry=e, details="many details").save()
+        ed = EntryDetails.objects.get(id=1)
+        self.assertEquals('headline',str(ed.entry))
+
+        e = Entry.objects.get(id=1)
+        self.assertEquals(e.entrydetails.details,"many details")
+
+
+

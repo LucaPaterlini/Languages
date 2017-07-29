@@ -26,6 +26,18 @@ class Entry(models.Model):
     n_comments =  models.IntegerField()
     n_pingbacks = models.IntegerField()
     rating = models.IntegerField()
+    #adding managers
+    objects = models.Manager()
+    #entries = models.Manager()
+
 
     def __unicode__(self):
         return self.headline
+#extention of a class
+
+class ThemeBlog(Blog):
+    theme = models.CharField(max_length=200)
+
+class EntryDetails(models.Model):
+    entry = models.OneToOneField(Entry, on_delete=models.CASCADE)
+    details = models.TextField()
