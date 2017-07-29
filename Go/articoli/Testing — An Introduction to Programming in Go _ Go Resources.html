@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://www.golang-book.com/books/intro/12 -->
+<html class="gr__golang-book_com"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Testing — An Introduction to Programming in Go | Go Resources</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" href="https://www.golang-book.com/public/img/favicon.ico">
+    <link rel="stylesheet" href="./Testing — An Introduction to Programming in Go _ Go Resources_files/golang-book.0.css" type="text/css">
+  </head>
+  <body data-gr-c-s-loaded="true">
+  <script async="" src="./Testing — An Introduction to Programming in Go _ Go Resources_files/analytics.js"></script><script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34551706-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    <div class="outer-container">
+    <div class="breadcrumbs">
+  <a href="https://www.golang-book.com/">Go Resources</a>
+  / <a href="https://www.golang-book.com/books/intro">An Introduction to Programming in Go</a>
+  
+  / <a href="https://www.golang-book.com/books/intro/12">Testing</a>
+  
+</div>
+<div class="book body container">
+
+<h1>Testing</h1>
+
+<p>Programming is not easy; even the best programmers are incapable of writing programs that work exactly as intended every time. Therefore an important part of the software development process is testing. Writing tests for our code is a good way to ensure quality and improve reliability.</p>
+
+<p>Go includes a special program that makes writing tests easier, so let's create some tests for the package we made in the last chapter. In the <code>math</code> folder from <code>chapter11</code> create a new file called <code>math_test.go</code> that contains this:</p>
+
+<pre>package math
+
+import "testing"
+
+func TestAverage(t *testing.T) {
+  var v float64
+  v = Average([]float64{1,2})
+  if v != 1.5 {
+    t.Error("Expected 1.5, got ", v)
+  }
+}</pre>
+
+<p>Now run this command:</p>
+<pre>go test</pre>
+
+<p>You should see this:</p>
+<pre>$ go test
+PASS
+ok      golang-book/chapter11/math      0.032s</pre>
+
+<p>The <code>go test</code> command will look for any tests in any of the files in the current folder and run them. Tests are identified by starting a function with the word <code>Test</code> and taking one argument of type <code>*testing.T</code>. In our case since we're testing the <code>Average</code> function we name the test function <code>TestAverage</code>.</p>
+
+<p>Once we have the testing function setup we write tests that use the code we're testing. In this case we know the average of <code>[1,2]</code> should be <code>1.5</code> so that's what we check. It's probably a good idea to test many different combinations of numbers so let's change our test program a little:</p>
+<pre>package math
+
+import "testing"
+
+type testpair struct {
+  values []float64
+  average float64
+}
+
+var tests = []testpair{
+  { []float64{1,2}, 1.5 },
+  { []float64{1,1,1,1,1,1}, 1 },
+  { []float64{-1,1}, 0 },
+}
+
+func TestAverage(t *testing.T) {
+  for _, pair := range tests {
+    v := Average(pair.values)
+    if v != pair.average {
+      t.Error(
+        "For", pair.values,
+        "expected", pair.average,
+        "got", v,
+      )
+    }
+  }
+}</pre><p>This is a very common way to setup tests (abundant examples can be found in the source code for the packages included with Go). We create a <code>struct</code> to represent the inputs and outputs for the function. Then we create a list of these <code>struct</code>s (pairs). Then we loop through each one and run the function.</p>
+
+
+<h3>Problems</h3>
+
+<ul>
+  <li><p>Writing a good suite of tests is not always easy, but the process of writings tests often reveals more about a problem then you may at first realize. For example, with our <code>Average</code> function what happens if you pass in an empty list (<code>[]float64{}</code>)? How could we modify the function to return <code>0</code> in this case?</p></li>
+  <li><p>Write a series of tests for the <code>Min</code> and <code>Max</code> functions you wrote in the previous chapter.</p></li>
+</ul>
+
+<table class="paging"><tbody><tr>
+  <td class="prev"><a href="https://www.golang-book.com/books/intro/11">← Previous</a></td>
+  <td><a href="https://www.golang-book.com/books/intro">Index</a></td>
+  <td class="next"><a href="https://www.golang-book.com/books/intro/13">Next →</a></td>
+</tr></tbody></table>
+
+</div>
+
+<div class="footer">
+  © 2017 Caleb Doxsey.
+  
+  All Rights Reserved.<br><br>
+
+  Portions of this page may contain modifications based on work created and
+  <a href="https://developers.google.com/site-policies">shared by Google</a>
+  and used according to terms described in the
+  <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons 3.0
+    Attribution License</a>.
+</div>
+
+    </div>
+    <script src="./Testing — An Introduction to Programming in Go _ Go Resources_files/golang-book.0.js"></script>
+  
+
+</body><span class="gr__tooltip"><span class="gr__tooltip-content"></span><i class="gr__tooltip-logo"></i><span class="gr__triangle"></span></span></html>
