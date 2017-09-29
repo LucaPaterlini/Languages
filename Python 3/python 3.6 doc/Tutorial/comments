@@ -1,0 +1,17 @@
+# last printed expression assigned to _
+# print('Ci''ao') # two string literals are automatically concatenated
+# the else statement in the for loop
+# you have to cast a range to a list type if you want it
+# default values are evaluated only once
+# the comment in available name_f.__doc__
+# annonatations are accebbisble with name_f.__annotations__
+# zip can be used to pair two sequences
+# importlib.reaload to reaload a module
+# dir(module) get the defined names by the module
+# ljust,rjust,center for padding or n before d/f
+# zfill to add zeros
+# prinf  old v available// print('Str {1} {0}'.format('arg1','arg0')) kargv equivalent is available
+# var() contains local variables of the current scope of visibility
+# with open('namefile','rwab') as f: to access files
+# json.dumps(str) print str dump(str,file_descriptor) writes on a file
+

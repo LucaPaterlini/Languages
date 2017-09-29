@@ -175,5 +175,9 @@ class MqTestCase(TestCase):
         e = Entry.objects.get(id=1)
         self.assertEquals(e.entrydetails.details,"many details")
 
+    def test_search(self):
+        preload()
+
+
 
 
